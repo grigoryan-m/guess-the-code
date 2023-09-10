@@ -1,9 +1,8 @@
 "use strict";
 
 
-let password = generateNewPassword();
-document.addEventListener("DOMContentLoaded", ()=>{
-
+    let password = generateNewPassword();
+    document.addEventListener("DOMContentLoaded", ()=>{
     const allInputs = document.getElementsByClassName("attempt");
     for(let i = 4; i < allInputs.length; i++){
         allInputs[i].disabled = true;
@@ -94,5 +93,33 @@ function isGameEnded(inputs, password, attempt){
 }
 
 function generateNewPassword(){
-    return [getRandomNum(9), getRandomNum(9), getRandomNum(9), getRandomNum(9)];
+    return removeDuplicateNumbers([getRandomNum(9), getRandomNum(9), getRandomNum(9), getRandomNum(9)]);
 }
+
+function removeDuplicateNumbers(arr) {
+    if (arr.length !== 4) {
+      throw new Error('Массив должен содержать ровно 4 числа.');
+    }
+  
+    const uniqueNumbers = [...new Set(arr)];
+  
+    if (uniqueNumbers.length === 4) {
+      // Если в массиве нет повторяющихся чисел, просто вернем его
+      return uniqueNumbers;
+    } else {
+      // Если в массиве есть повторяющиеся числа, создадим новый массив
+      // с уникальными числами, начиная с 1 и увеличивая на 1 для каждого числа
+      const resultArray = [];
+      let uniqueNumber = 1;
+  
+      for (let i = 0; i < 4; i++) {
+        while (uniqueNumbers.includes(uniqueNumber)) {
+          uniqueNumber++;
+        }
+        resultArray.push(uniqueNumber);
+        uniqueNumber++;
+      }
+  
+      return resultArray;
+    }
+  }
