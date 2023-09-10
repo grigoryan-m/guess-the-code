@@ -3,7 +3,6 @@
 
 let password = generateNewPassword();
 document.addEventListener("DOMContentLoaded", ()=>{
-    console.log(password);
 
     const allInputs = document.getElementsByClassName("attempt");
     for(let i = 4; i < allInputs.length; i++){
@@ -23,6 +22,15 @@ inputs.forEach((input, index) => {
         }
     });
 });
+inputs.forEach((input, index) => {
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Backspace' && input.value === '') {
+        if (index > 0) {
+          inputs[index - 1].focus();
+        }
+      }
+    });
+  });
 document.addEventListener("keydown", (event) => {
     if(event.code === "Enter"){
         const disableInputs = document.getElementsByClassName(`field-${attempt}`);
@@ -42,16 +50,17 @@ document.addEventListener("keydown", (event) => {
             }
 
             if(isGameEnded(disableInputs, password, attempt) == 1){
-                alert("you won!");
+                alert("You won!");
                 location.reload();
             }else if(isGameEnded(disableInputs, password, attempt) == -1){
-                alert("you lose");
+                alert(`You lost!\nPassword was ${password}`);
             }
             attempt++;
             const enableInputs = document.getElementsByClassName(`field-${attempt}`);
             for(let i = 0; i < enableInputs.length; i++){
                 enableInputs[i].disabled = false;
             }
+            enableInputs[0].focus();
 
 
         }
