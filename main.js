@@ -1,13 +1,16 @@
 "use strict";
 
 
-const password = [getRandomNum(9), getRandomNum(9), getRandomNum(9), getRandomNum(9)];
+let password = generateNewPassword();
 document.addEventListener("DOMContentLoaded", ()=>{
     console.log(password);
 
     const allInputs = document.getElementsByClassName("attempt");
     for(let i = 4; i < allInputs.length; i++){
         allInputs[i].disabled = true;
+    }
+    for(let i = 0; i < allInputs.length; i++){
+        allInputs[i].value = '';
     }
 });
 const inputs = document.querySelectorAll('.attempt');
@@ -40,6 +43,7 @@ document.addEventListener("keydown", (event) => {
 
             if(isGameEnded(disableInputs, password, attempt) == 1){
                 alert("you won!");
+                location.reload();
             }else if(isGameEnded(disableInputs, password, attempt) == -1){
                 alert("you lose");
             }
@@ -78,4 +82,8 @@ function isGameEnded(inputs, password, attempt){
         }
     }
     return 1;
+}
+
+function generateNewPassword(){
+    return [getRandomNum(9), getRandomNum(9), getRandomNum(9), getRandomNum(9)];
 }

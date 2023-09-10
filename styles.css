@@ -15,6 +15,7 @@ body{
 }
 .panel{
     width: 450px;
+    max-width: calc(100% - 20px);
     height: 600px;
     border: 1px solid #FBFFFE;
     display: flex;
